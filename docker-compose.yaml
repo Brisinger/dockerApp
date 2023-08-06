@@ -1,0 +1,47 @@
+version: '3'
+services:
+  my-app:
+    image: ${DOCKER_REGISTRY}/my-app:1.0.0
+    ports:
+      - 3000:3000
+  # my-app application container by building image locally.
+  # my-app:  # name of the application service.
+  #   build: # specify the directory of the Dockerfile.
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: my-app:1.0.0 # image name built via Dockerfile from application.
+  #   container_name: my-app # container name hosting the application image.
+  #   ports:
+  #     - 3000:3000 # specify ports forwarding
+  #     # Below database enviornment variable for api is helpful when you have to use database as managed service.
+  #   environment:
+  #     - MONGO_DB_USERNAME=admin
+  #     - MONGO_DB_PWD=password
+  #   links:
+  #     - "mongodb"
+  # mongodb container image.
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db
+
+  # mongo-express container image.
+  mongo-express:
+    image: mongo-express
+    restart: always # fixes MongoNetworkError when mongodb is not ready on starting mongo-express.
+    ports:
+      - 8080:8081 # specify ports forwarding.
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      - mongodb
+volumes:
+  mongo-data:
+    driver: local
