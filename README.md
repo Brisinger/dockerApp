@@ -62,7 +62,7 @@ Step 5: Enter into container host shell running my-app:1.0.0 application.
     
     docker exec -it my-app:1.0.0 /bin/sh
 
-    _NOTE: this will open the shell in cointainer with working directory "home/app"
+    _NOTE: this will open the shell in cointainer with working directory `home/app`
     executing the linux and node commands in current working directory. This is optional.
 
     npm install
@@ -83,18 +83,18 @@ _Note: Any changes made to application requires removing the my-app:1.0.0 image 
 
 The dot "." at the end of the command denotes location of the Dockerfile in current working directory.
 
-### From docker image pused to AWS Elastic Container Registry (ECR)
+### From docker image pushed to AWS Elastic Container Registry (ECR)
 ### Start the Application
 
 Step 1: Set up an AWS account with access key configured.
 
-_You can configure access key for a user from IAM in AWS.
+    _You can configure access key for a user from IAM in AWS.
 
 Step 2: Under services search from the service ECR to manage container deployment.
 
 Step 3: Create a private container repository in ECR with name "my-app" same as your application.
 
-_In AWS each repository can have multiple images of the same application.
+In AWS each repository can have multiple images of the same application.
 
 Step 4: Once repository is create go to link Amazon ECR --> Repositories and select "my-app" repository.
 
@@ -104,7 +104,7 @@ Step 6: Follow the steps in Modal that opens for Push command for "my-app" repos
 
 Step 7: In ECR use the Domain name of Container Registry and set the environment variable DOCKER_REGISTRY.
 
-    _Setting environment variable in local maching for linus and mac similar to windows.
+    Setting environment variable in local maching for linus and mac similar to windows.
     Run the following commands in terminal.    
         
     export DOCKER_REGISTRY=<Container-Registry-URL>
@@ -115,7 +115,7 @@ Step 7: In ECR use the Domain name of Container Registry and set the environment
 
     source ~/.zshrc
 
-    _Now, the "DOCKER_REGISTRY" environment variable will be available in all new terminal automatically loaded from your shell configuration files e.g. ~/.zshrc or ~/.bashrc, ~/.bash_profile etc.
+    Now, the "DOCKER_REGISTRY" environment variable will be available in all new terminal automatically loaded from your shell configuration files e.g. ~/.zshrc or ~/.bashrc, ~/.bash_profile etc.
 
 Step 8: Use the environment variable DOCKER_REGISTRY in your shell or a configuration file to store the registry URL, and then use that variable in your docker-compose.yml for pulling images for services from AWS ECR under services for image as '${DOCKER_REGISTRY}/my-app:1.0.0'.
 
